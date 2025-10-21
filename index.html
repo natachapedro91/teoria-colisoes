@@ -133,10 +133,18 @@
             padding: 5px 12px;
             border-radius: 8px;
             border: 2px solid #dc2626;
+            z-index: 100;
         }
         .label-success {
             color: #16a34a;
             border-color: #16a34a;
+        }
+        .single-atom {
+            background: #fef3c7;
+            border: 3px dashed #f59e0b;
+            border-radius: 12px;
+            padding: 15px;
+            display: inline-block;
         }
         .info-grid {
             display: grid;
@@ -427,12 +435,11 @@
                     const box = document.createElement('div');
                     box.className = 'complex-box';
                     box.style.position = 'absolute';
-                    box.style.left = '280px';
+                    box.style.left = '250px';
                     box.style.top = '180px';
                     drawH2inline(0, 0, box);
-                    drawCl2inline(130, 0, box);
+                    drawCl2inline(140, 0, box);
                     container.appendChild(box);
-                    addLabel(container, 400, 150, 'Geometria inadequada!', false);
                 } else {
                     drawH2(80, 220, container);
                     drawCl2(620, 220, container);
@@ -448,70 +455,80 @@
                     const box = document.createElement('div');
                     box.className = 'complex-box';
                     box.style.position = 'absolute';
-                    box.style.left = '280px';
-                    box.style.top = '150px';
+                    box.style.left = '260px';
+                    box.style.top = '130px';
                     drawH2Vertical(0, 0, box);
-                    drawCl2Vertical(90, 0, box);
+                    drawCl2Vertical(100, 0, box);
                     container.appendChild(box);
-                    addLabel(container, 400, 120, '⚡ COMPLEXO ATIVADO', true);
                 } else {
-                    const box1 = document.createElement('div');
-                    box1.className = 'product-box';
-                    box1.style.position = 'absolute';
-                    box1.style.left = '120px';
-                    box1.style.top = '180px';
-                    drawHClVertical(0, 0, box1);
-                    container.appendChild(box1);
-                    
-                    const box2 = document.createElement('div');
-                    box2.className = 'product-box';
-                    box2.style.position = 'absolute';
-                    box2.style.left = '580px';
-                    box2.style.top = '180px';
-                    drawHClVertical(0, 0, box2);
-                    container.appendChild(box2);
+                    drawHClVertical(130, 180, container);
+                    drawHClVertical(570, 180, container);
                 }
             } else if (type === 'tipo_t') {
                 if (step === 0) {
-                    drawH2(300, 140, container);
-                    drawCl2Vertical(370, 300, container);
+                    drawH2(300, 200, container);
+                    drawCl2Vertical(340, 80, container);
                 } else if (step === 1) {
-                    drawH2(300, 180, container);
-                    drawCl2Vertical(370, 250, container);
+                    drawH2(300, 200, container);
+                    drawCl2Vertical(340, 140, container);
                 } else if (step === 2) {
                     const box = document.createElement('div');
                     box.className = 'complex-box';
                     box.style.position = 'absolute';
-                    box.style.left = '260px';
-                    box.style.top = '180px';
-                    drawH2inline(0, 0, box);
-                    drawCl2Vertical(70, 15, box);
+                    box.style.left = '265px';
+                    box.style.top = '150px';
+                    drawH2inline(0, 35, box);
+                    drawCl2Vertical(65, -35, box);
                     container.appendChild(box);
-                    addLabel(container, 400, 150, 'Geometria T inadequada!', false);
                 } else {
-                    drawH2(280, 120, container);
-                    drawCl2Vertical(390, 320, container);
+                    drawH2(280, 200, container);
+                    drawCl2Vertical(360, 80, container);
                 }
             } else if (type === 'tipo_l') {
                 if (step === 0) {
-                    drawH2(120, 300, container);
+                    drawH2(120, 280, container);
                     drawCl2Vertical(550, 100, container);
                 } else if (step === 1) {
-                    drawH2(220, 260, container);
+                    drawH2(230, 240, container);
                     drawCl2Vertical(480, 150, container);
                 } else if (step === 2) {
                     const box = document.createElement('div');
                     box.className = 'complex-box';
                     box.style.position = 'absolute';
-                    box.style.left = '280px';
-                    box.style.top = '180px';
+                    box.style.left = '265px';
+                    box.style.top = '165px';
                     drawH2inline(0, 35, box);
-                    drawCl2Vertical(90, -25, box);
+                    drawCl2Vertical(120, -30, box);
                     container.appendChild(box);
-                    addLabel(container, 400, 150, 'Ângulo L inadequado!', false);
                 } else {
-                    drawH2(100, 320, container);
-                    drawCl2Vertical(570, 90, container);
+                    // HCl formado
+                    const hclBox = document.createElement('div');
+                    hclBox.className = 'product-box';
+                    hclBox.style.position = 'absolute';
+                    hclBox.style.left = '320px';
+                    hclBox.style.top = '190px';
+                    drawHClVertical(0, 0, hclBox);
+                    container.appendChild(hclBox);
+                    
+                    // H isolado
+                    const hBox = document.createElement('div');
+                    hBox.className = 'single-atom';
+                    hBox.style.position = 'absolute';
+                    hBox.style.left = '150px';
+                    hBox.style.top = '230px';
+                    const hAtom = createAtom('H', 0, 0);
+                    hBox.appendChild(hAtom);
+                    container.appendChild(hBox);
+                    
+                    // Cl isolado
+                    const clBox = document.createElement('div');
+                    clBox.className = 'single-atom';
+                    clBox.style.position = 'absolute';
+                    clBox.style.left = '550px';
+                    clBox.style.top = '230px';
+                    const clAtom = createAtom('Cl', 0, 0, true);
+                    clBox.appendChild(clAtom);
+                    container.appendChild(clBox);
                 }
             } else if (type === 'paralela') {
                 if (step === 0) {
@@ -524,36 +541,100 @@
                     const box = document.createElement('div');
                     box.className = 'complex-box';
                     box.style.position = 'absolute';
-                    box.style.left = '280px';
-                    box.style.top = '170px';
-                    drawH2inline(0, 0, box);
-                    drawCl2inline(0, 50, box);
+                    box.style.left = '270px';
+                    box.style.top = '160px';
+                    // H-H na parte superior
+                    drawAtomDirect('H', 0, 0, box);
+                    createBond(50, 23, 15, 5, 'bond-weak', box);
+                    drawAtomDirect('H', 65, 0, box);
+                    // H (inferior direito) toca Cl (superior esquerdo) - formato Z
+                    createBond(105, 23, 5, 35, 'bond-weak', box);
+                    drawAtomDirect('Cl', 85, 55, box, true);
+                    createBond(150, 78, 15, 5, 'bond-weak', box);
+                    drawAtomDirect('Cl', 165, 55, box, true);
                     container.appendChild(box);
-                    addLabel(container, 400, 140, 'Desalinhamento impede!', false);
                 } else {
-                    drawH2(80, 180, container);
-                    drawCl2(620, 250, container);
+                    // HCl formado
+                    const hclBox = document.createElement('div');
+                    hclBox.className = 'product-box';
+                    hclBox.style.position = 'absolute';
+                    hclBox.style.left = '340px';
+                    hclBox.style.top = '200px';
+                    drawHCl(0, 0, hclBox);
+                    container.appendChild(hclBox);
+                    
+                    // H isolado
+                    const hBox = document.createElement('div');
+                    hBox.className = 'single-atom';
+                    hBox.style.position = 'absolute';
+                    hBox.style.left = '150px';
+                    hBox.style.top = '210px';
+                    const hAtom = createAtom('H', 0, 0);
+                    hBox.appendChild(hAtom);
+                    container.appendChild(hBox);
+                    
+                    // Cl isolado
+                    const clBox = document.createElement('div');
+                    clBox.className = 'single-atom';
+                    clBox.style.position = 'absolute';
+                    clBox.style.left = '550px';
+                    clBox.style.top = '250px';
+                    const clAtom = createAtom('Cl', 0, 0, true);
+                    clBox.appendChild(clAtom);
+                    container.appendChild(clBox);
                 }
             } else if (type === 'lateral') {
                 if (step === 0) {
-                    drawH2(100, 200, container);
-                    drawCl2(580, 280, container);
+                    drawH2(100, 220, container);
+                    drawCl2(580, 220, container);
                 } else if (step === 1) {
-                    drawH2(220, 200, container);
-                    drawCl2(480, 260, container);
+                    drawH2(220, 220, container);
+                    drawCl2(460, 220, container);
                 } else if (step === 2) {
                     const box = document.createElement('div');
                     box.className = 'complex-box';
                     box.style.position = 'absolute';
-                    box.style.left = '290px';
-                    box.style.top = '190px';
-                    drawH2inline(0, 0, box);
-                    drawCl2inline(25, 30, box);
+                    box.style.left = '270px';
+                    box.style.top = '180px';
+                    // H-H
+                    drawAtomDirect('H', 0, 0, box);
+                    createBond(50, 23, 15, 5, 'bond-weak', box);
+                    drawAtomDirect('H', 65, 0, box);
+                    // H toca Cl
+                    createBond(105, 23, 15, 5, 'bond-weak', box);
+                    drawAtomDirect('Cl', 120, 0, box, true);
+                    createBond(170, 23, 15, 5, 'bond-weak', box);
+                    drawAtomDirect('Cl', 185, 0, box, true);
                     container.appendChild(box);
-                    addLabel(container, 400, 160, 'Cruzamento inadequado!', false);
                 } else {
-                    drawH2(120, 200, container);
-                    drawCl2(600, 280, container);
+                    // HCl formado
+                    const hclBox = document.createElement('div');
+                    hclBox.className = 'product-box';
+                    hclBox.style.position = 'absolute';
+                    hclBox.style.left = '340px';
+                    hclBox.style.top = '200px';
+                    drawHCl(0, 0, hclBox);
+                    container.appendChild(hclBox);
+                    
+                    // H isolado
+                    const hBox = document.createElement('div');
+                    hBox.className = 'single-atom';
+                    hBox.style.position = 'absolute';
+                    hBox.style.left = '150px';
+                    hBox.style.top = '230px';
+                    const hAtom = createAtom('H', 0, 0);
+                    hBox.appendChild(hAtom);
+                    container.appendChild(hBox);
+                    
+                    // Cl isolado
+                    const clBox = document.createElement('div');
+                    clBox.className = 'single-atom';
+                    clBox.style.position = 'absolute';
+                    clBox.style.left = '550px';
+                    clBox.style.top = '230px';
+                    const clAtom = createAtom('Cl', 0, 0, true);
+                    clBox.appendChild(clAtom);
+                    container.appendChild(clBox);
                 }
             }
         }
@@ -621,6 +702,20 @@
             parent.appendChild(cl);
         }
 
+        function drawHCl(x, y, parent) {
+            const h = createAtom('H', x, y);
+            const cl = createAtom('Cl', x + 75, y, true);
+            const bond = createBond(x + 55, y + 23, 20, 5, 'bond-hcl');
+            parent.appendChild(h);
+            parent.appendChild(bond);
+            parent.appendChild(cl);
+        }
+
+        function drawAtomDirect(symbol, x, y, parent, isCl = false) {
+            const atom = createAtom(symbol, x, y, isCl);
+            parent.appendChild(atom);
+        }
+
         function createAtom(symbol, x, y, isCl = false) {
             const atom = document.createElement('div');
             atom.className = 'atom ' + (isCl ? 'atom-cl' : 'atom-h');
@@ -630,24 +725,15 @@
             return atom;
         }
 
-        function createBond(x, y, w, h, cls) {
+        function createBond(x, y, w, h, cls, parent = null) {
             const bond = document.createElement('div');
             bond.className = 'bond ' + cls;
             bond.style.left = x + 'px';
             bond.style.top = y + 'px';
             bond.style.width = w + 'px';
             bond.style.height = h + 'px';
+            if (parent) parent.appendChild(bond);
             return bond;
-        }
-
-        function addLabel(parent, x, y, text, isSuccess) {
-            const label = document.createElement('div');
-            label.className = 'label' + (isSuccess ? ' label-success' : '');
-            label.textContent = text;
-            label.style.left = x + 'px';
-            label.style.top = y + 'px';
-            label.style.transform = 'translateX(-50%)';
-            parent.appendChild(label);
         }
 
         function init() {
