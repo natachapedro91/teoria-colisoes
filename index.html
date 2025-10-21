@@ -7,92 +7,164 @@
     <style>
         body { 
             margin: 0; 
-            padding: 20px;
+            padding: 15px;
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #e0f2fe 0%, #d1fae5 100%);
             min-height: 100vh;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1400px; margin: 0 auto; }
         h1 { 
             text-align: center; 
             color: #1e40af; 
-            font-size: 2.5em; 
-            margin-bottom: 10px; 
+            font-size: 2.2em; 
+            margin-bottom: 8px; 
         }
         .subtitle { 
             text-align: center; 
             color: #6b7280; 
-            font-size: 1.2em; 
-            margin-bottom: 30px; 
-        }
-        .panel { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 1em; 
             margin-bottom: 20px; 
         }
-        .btn-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 15px; 
-            margin-top: 15px; 
+        .main-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .btn {
-            padding: 18px;
+            padding: 15px;
             border: 3px solid #d1d5db;
             background: white;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s;
             font-weight: 500;
+            text-align: left;
         }
         .btn:hover { 
             border-color: #60a5fa; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
+            transform: translateX(5px);
         }
         .btn.active { 
             border-color: #2563eb; 
             background: #dbeafe; 
-            font-weight: bold; 
+            font-weight: bold;
+            transform: translateX(5px);
+        }
+        .main-content {
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .anim-box {
-            min-height: 450px;
+            height: 500px;
             background: #eff6ff;
             border: 3px solid #bfdbfe;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 25px 0;
-            padding: 20px;
+            margin-bottom: 20px;
             position: relative;
+            overflow: hidden;
+        }
+        .molecule-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .atom {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: 4px solid;
+            position: absolute;
+            transition: all 0.5s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .atom-h { background: #e5e7eb; border-color: #6b7280; color: #1f2937; }
+        .atom-cl { background: #86efac; border-color: #16a34a; color: #14532d; }
+        .bond {
+            position: absolute;
+            background: #4b5563;
+            transition: all 0.5s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .bond-h { background: #6b7280; }
+        .bond-cl { background: #16a34a; }
+        .bond-hcl { background: #2563eb; }
+        .bond-weak { background: #ef4444; opacity: 0.7; }
+        .complex-box {
+            background: #fef3c7;
+            border: 5px solid #f59e0b;
+            border-radius: 15px;
+            padding: 35px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+        }
+        .product-box {
+            background: #dcfce7;
+            border: 4px solid #16a34a;
+            border-radius: 12px;
+            padding: 25px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(22,163,74,0.3);
+        }
+        .label {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            color: #dc2626;
+            white-space: nowrap;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 2px solid #dc2626;
+        }
+        .label-success {
+            color: #16a34a;
+            border-color: #16a34a;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
         }
         .info-box {
             background: #f9fafb;
-            padding: 25px;
+            padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
             border-left: 5px solid #3b82f6;
         }
         .info-box h4 { 
-            margin: 0 0 12px 0; 
-            font-size: 1.2em;
+            margin: 0 0 10px 0; 
+            font-size: 1.1em;
             color: #1f2937;
         }
         .info-text { 
-            font-size: 1.05em; 
-            line-height: 1.6;
+            font-size: 1em; 
+            line-height: 1.5;
             color: #4b5563;
         }
         .status-box {
             background: white;
-            padding: 20px;
+            padding: 18px;
             border-radius: 10px;
-            margin-top: 15px;
-            border: 2px solid #e5e7eb;
+            border: 3px solid #e5e7eb;
         }
         .status-ok { 
             color: #16a34a; 
@@ -108,12 +180,11 @@
             display: flex; 
             justify-content: center; 
             gap: 20px; 
-            margin: 25px 0;
-            flex-wrap: wrap;
+            margin: 20px 0;
         }
         .ctrl-btn {
-            padding: 18px 35px;
-            font-size: 1.15em;
+            padding: 16px 32px;
+            font-size: 1.1em;
             font-weight: bold;
             border: none;
             border-radius: 10px;
@@ -127,12 +198,12 @@
         .btn-secondary:hover { background: #4b5563; }
         .steps { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            grid-template-columns: repeat(4, 1fr); 
             gap: 12px; 
-            margin-top: 20px; 
+            margin-top: 20px;
         }
         .step {
-            padding: 20px;
+            padding: 18px;
             text-align: center;
             border-radius: 10px;
             transition: all 0.3s;
@@ -145,36 +216,57 @@
             box-shadow: 0 4px 8px rgba(37,99,235,0.3);
         }
         .step.off { background: #f3f4f6; color: #9ca3af; }
-        .step-num { font-size: 2em; margin-bottom: 8px; }
-        .step-txt { font-size: 0.95em; }
+        .step-num { font-size: 1.8em; margin-bottom: 5px; }
+        .step-txt { font-size: 0.9em; }
+        .panel {
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
         .concepts { 
             background: #fef9c3; 
             border: 4px solid #fbbf24; 
-            padding: 25px; 
+            padding: 20px; 
             border-radius: 12px; 
-            margin-top: 30px; 
         }
         .concept { 
             background: white; 
-            padding: 18px; 
-            margin-top: 12px; 
+            padding: 15px; 
+            margin-top: 10px; 
             border-radius: 8px; 
             border-left: 5px solid;
-            line-height: 1.6;
+            line-height: 1.5;
+            font-size: 0.95em;
         }
         .c-green { border-left-color: #16a34a; }
         .c-red { border-left-color: #dc2626; }
         .c-yellow { border-left-color: #fbbf24; }
-        .demo-text {
-            font-size: 1.5em;
-            color: #6b7280;
+        .sidebar-title {
+            background: #1e40af;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
-            padding: 40px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8em; }
-            .btn-grid { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .btn {
+                flex: 1;
+                min-width: 200px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -183,42 +275,45 @@
         <h1>⚛️ Teoria das Colisões: H₂ + Cl₂ → 2HCl</h1>
         <p class="subtitle">Material Visual Interativo para Aulas de Química</p>
 
-        <div class="panel">
-            <h2 style="margin-bottom: 20px; color: #1f2937;">🔬 Selecione o tipo de colisão:</h2>
-            <div class="btn-grid" id="btnGrid"></div>
-        </div>
-
-        <div class="panel">
-            <h3 id="title" style="text-align: center; margin-bottom: 15px; font-size: 1.5em;"></h3>
-            <p id="desc" style="text-align: center; color: #6b7280; font-size: 1.1em;"></p>
-
-            <div class="anim-box">
-                <div class="demo-text" id="animArea">Etapa 1 de 4</div>
+        <div class="main-layout">
+            <!-- BARRA LATERAL COM BOTÕES -->
+            <div class="sidebar">
+                <div class="sidebar-title">🔬 Tipos de Colisão</div>
+                <div id="btnList"></div>
             </div>
 
-            <div class="info-box">
-                <h4>📝 Observação desta etapa:</h4>
-                <p class="info-text" id="obs"></p>
+            <!-- CONTEÚDO PRINCIPAL -->
+            <div class="main-content">
+                <h3 id="title" style="text-align: center; margin-bottom: 10px; font-size: 1.4em;"></h3>
+                <p id="desc" style="text-align: center; color: #6b7280; font-size: 1em; margin-bottom: 15px;"></p>
+
+                <div class="anim-box">
+                    <div id="animArea" class="molecule-container"></div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>📝 Observação:</h4>
+                        <p class="info-text" id="obs"></p>
+                    </div>
+
+                    <div class="status-box">
+                        <div id="status"></div>
+                        <p id="reason" style="margin-top: 10px; color: #4b5563; font-size: 0.95em;"></p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="ctrl-btn btn-primary" onclick="next()">▶️ Próxima Etapa</button>
+                    <button class="ctrl-btn btn-secondary" onclick="reset()">🔄 Voltar ao Início</button>
+                </div>
+
+                <div class="steps" id="steps"></div>
             </div>
-
-            <div class="status-box">
-                <div id="status"></div>
-                <p id="reason" style="margin-top: 12px; color: #4b5563; font-size: 1.05em;"></p>
-            </div>
-        </div>
-
-        <div class="controls">
-            <button class="ctrl-btn btn-primary" onclick="next()">▶️ Próxima Etapa</button>
-            <button class="ctrl-btn btn-secondary" onclick="reset()">🔄 Voltar ao Início</button>
-        </div>
-
-        <div class="panel">
-            <h3 style="margin-bottom: 15px; color: #1f2937;">📊 Progresso da Animação:</h3>
-            <div class="steps" id="steps"></div>
         </div>
 
         <div class="concepts">
-            <h3 style="margin-bottom: 20px; font-size: 1.4em;">🔑 Conceitos-Chave da Teoria das Colisões:</h3>
+            <h3 style="margin-bottom: 15px; font-size: 1.3em;">🔑 Conceitos-Chave da Teoria das Colisões:</h3>
             <div class="concept c-green">
                 <strong>✓ Colisão EFETIVA:</strong> Frontal vertical (moléculas verticais, lado a lado) - todos os 4 átomos ficam próximos simultaneamente, permitindo a formação de produtos.
             </div>
@@ -230,9 +325,9 @@
             </div>
         </div>
 
-        <div class="panel" style="margin-top: 30px; text-align: center; background: #f0f9ff;">
-            <p style="color: #0369a1; font-size: 1.1em;">
-                💡 <strong>Dica para professores:</strong> Use as teclas de seta ou espaço para avançar. Pressione F11 para modo tela cheia durante a projeção.
+        <div class="panel" style="text-align: center; background: #f0f9ff; margin-top: 20px;">
+            <p style="color: #0369a1; font-size: 1em;">
+                💡 <strong>Dica:</strong> Use as setas do teclado (→ ←) ou espaço para navegar. Pressione F11 para tela cheia.
             </p>
         </div>
     </div>
@@ -250,7 +345,7 @@
                 obs: [
                     'Reagentes H₂ e Cl₂ separados na horizontal',
                     'Moléculas se aproximando frontalmente (paralelas)',
-                    'Os átomos não conseguem se reorganizar adequadamente - geometria inadequada',
+                    'Tentativa de formar complexo - mas geometria inadequada impede',
                     'Moléculas se afastam sem formar produtos - reação NÃO ocorre'
                 ]
             },
@@ -274,7 +369,7 @@
                 obs: [
                     'Reagentes H₂ e Cl₂ separados',
                     'Moléculas se aproximando em forma de "T"',
-                    'Os átomos não conseguem se aproximar adequadamente - geometria inadequada',
+                    'Tentativa de complexo - geometria em T impede reorganização adequada',
                     'Moléculas se afastam sem formar produtos - reação NÃO ocorre'
                 ]
             },
@@ -286,7 +381,7 @@
                 obs: [
                     'Reagentes H₂ e Cl₂ separados',
                     'Moléculas se aproximando em ângulo (forma de "L")',
-                    'Apenas alguns átomos ficam próximos - insuficiente para formar 2 HCl',
+                    'Contato parcial - apenas alguns átomos próximos, insuficiente',
                     'Moléculas se afastam sem formar produtos - reação NÃO ocorre'
                 ]
             },
@@ -298,7 +393,7 @@
                 obs: [
                     'Reagentes H₂ e Cl₂ separados',
                     'Moléculas se aproximando paralelas mas deslocadas',
-                    'Orientação paralela deslocada impede contato adequado entre todos os átomos',
+                    'Desalinhamento impede contato adequado - complexo não se forma corretamente',
                     'Moléculas se afastam sem formar produtos - reação NÃO ocorre'
                 ]
             },
@@ -310,7 +405,7 @@
                 obs: [
                     'Reagentes H₂ e Cl₂ separados',
                     'Moléculas se aproximando em diagonal cruzada',
-                    'Apenas alguns átomos ficam próximos - insuficiente',
+                    'Cruzamento diagonal - contato insuficiente para reação completa',
                     'Moléculas se afastam sem formar produtos - reação NÃO ocorre'
                 ]
             }
@@ -318,14 +413,251 @@
 
         const stepNames = ['Reagentes separados', 'Aproximação', 'Complexo Ativado', 'Produtos formados'];
 
+        function drawMolecule(container, type, step) {
+            container.innerHTML = '';
+            
+            if (type === 'frontal_horizontal') {
+                if (step === 0) {
+                    drawH2(50, 220, container);
+                    drawCl2(650, 220, container);
+                } else if (step === 1) {
+                    drawH2(200, 220, container);
+                    drawCl2(500, 220, container);
+                } else if (step === 2) {
+                    const box = document.createElement('div');
+                    box.className = 'complex-box';
+                    box.style.position = 'absolute';
+                    box.style.left = '280px';
+                    box.style.top = '180px';
+                    drawH2inline(0, 0, box);
+                    drawCl2inline(130, 0, box);
+                    container.appendChild(box);
+                    addLabel(container, 400, 150, 'Geometria inadequada!', false);
+                } else {
+                    drawH2(80, 220, container);
+                    drawCl2(620, 220, container);
+                }
+            } else if (type === 'frontal_vertical') {
+                if (step === 0) {
+                    drawH2Vertical(180, 180, container);
+                    drawCl2Vertical(550, 180, container);
+                } else if (step === 1) {
+                    drawH2Vertical(280, 180, container);
+                    drawCl2Vertical(450, 180, container);
+                } else if (step === 2) {
+                    const box = document.createElement('div');
+                    box.className = 'complex-box';
+                    box.style.position = 'absolute';
+                    box.style.left = '280px';
+                    box.style.top = '150px';
+                    drawH2Vertical(0, 0, box);
+                    drawCl2Vertical(90, 0, box);
+                    container.appendChild(box);
+                    addLabel(container, 400, 120, '⚡ COMPLEXO ATIVADO', true);
+                } else {
+                    const box1 = document.createElement('div');
+                    box1.className = 'product-box';
+                    box1.style.position = 'absolute';
+                    box1.style.left = '120px';
+                    box1.style.top = '180px';
+                    drawHClVertical(0, 0, box1);
+                    container.appendChild(box1);
+                    
+                    const box2 = document.createElement('div');
+                    box2.className = 'product-box';
+                    box2.style.position = 'absolute';
+                    box2.style.left = '580px';
+                    box2.style.top = '180px';
+                    drawHClVertical(0, 0, box2);
+                    container.appendChild(box2);
+                }
+            } else if (type === 'tipo_t') {
+                if (step === 0) {
+                    drawH2(300, 140, container);
+                    drawCl2Vertical(370, 300, container);
+                } else if (step === 1) {
+                    drawH2(300, 180, container);
+                    drawCl2Vertical(370, 250, container);
+                } else if (step === 2) {
+                    const box = document.createElement('div');
+                    box.className = 'complex-box';
+                    box.style.position = 'absolute';
+                    box.style.left = '260px';
+                    box.style.top = '180px';
+                    drawH2inline(0, 0, box);
+                    drawCl2Vertical(70, 15, box);
+                    container.appendChild(box);
+                    addLabel(container, 400, 150, 'Geometria T inadequada!', false);
+                } else {
+                    drawH2(280, 120, container);
+                    drawCl2Vertical(390, 320, container);
+                }
+            } else if (type === 'tipo_l') {
+                if (step === 0) {
+                    drawH2(120, 300, container);
+                    drawCl2Vertical(550, 100, container);
+                } else if (step === 1) {
+                    drawH2(220, 260, container);
+                    drawCl2Vertical(480, 150, container);
+                } else if (step === 2) {
+                    const box = document.createElement('div');
+                    box.className = 'complex-box';
+                    box.style.position = 'absolute';
+                    box.style.left = '280px';
+                    box.style.top = '180px';
+                    drawH2inline(0, 35, box);
+                    drawCl2Vertical(90, -25, box);
+                    container.appendChild(box);
+                    addLabel(container, 400, 150, 'Ângulo L inadequado!', false);
+                } else {
+                    drawH2(100, 320, container);
+                    drawCl2Vertical(570, 90, container);
+                }
+            } else if (type === 'paralela') {
+                if (step === 0) {
+                    drawH2(50, 180, container);
+                    drawCl2(650, 250, container);
+                } else if (step === 1) {
+                    drawH2(180, 180, container);
+                    drawCl2(520, 250, container);
+                } else if (step === 2) {
+                    const box = document.createElement('div');
+                    box.className = 'complex-box';
+                    box.style.position = 'absolute';
+                    box.style.left = '280px';
+                    box.style.top = '170px';
+                    drawH2inline(0, 0, box);
+                    drawCl2inline(0, 50, box);
+                    container.appendChild(box);
+                    addLabel(container, 400, 140, 'Desalinhamento impede!', false);
+                } else {
+                    drawH2(80, 180, container);
+                    drawCl2(620, 250, container);
+                }
+            } else if (type === 'lateral') {
+                if (step === 0) {
+                    drawH2(100, 200, container);
+                    drawCl2(580, 280, container);
+                } else if (step === 1) {
+                    drawH2(220, 200, container);
+                    drawCl2(480, 260, container);
+                } else if (step === 2) {
+                    const box = document.createElement('div');
+                    box.className = 'complex-box';
+                    box.style.position = 'absolute';
+                    box.style.left = '290px';
+                    box.style.top = '190px';
+                    drawH2inline(0, 0, box);
+                    drawCl2inline(25, 30, box);
+                    container.appendChild(box);
+                    addLabel(container, 400, 160, 'Cruzamento inadequado!', false);
+                } else {
+                    drawH2(120, 200, container);
+                    drawCl2(600, 280, container);
+                }
+            }
+        }
+
+        function drawH2(x, y, parent) {
+            const h1 = createAtom('H', x, y);
+            const h2 = createAtom('H', x + 75, y);
+            const bond = createBond(x + 55, y + 23, 20, 5, 'bond-h');
+            parent.appendChild(h1);
+            parent.appendChild(bond);
+            parent.appendChild(h2);
+        }
+
+        function drawH2inline(x, y, parent) {
+            const h1 = createAtom('H', x, y);
+            const h2 = createAtom('H', x + 65, y);
+            const bond = createBond(x + 50, y + 23, 15, 5, 'bond-weak');
+            parent.appendChild(h1);
+            parent.appendChild(bond);
+            parent.appendChild(h2);
+        }
+
+        function drawCl2(x, y, parent) {
+            const cl1 = createAtom('Cl', x, y, true);
+            const cl2 = createAtom('Cl', x + 75, y, true);
+            const bond = createBond(x + 55, y + 23, 20, 5, 'bond-cl');
+            parent.appendChild(cl1);
+            parent.appendChild(bond);
+            parent.appendChild(cl2);
+        }
+
+        function drawCl2inline(x, y, parent) {
+            const cl1 = createAtom('Cl', x, y, true);
+            const cl2 = createAtom('Cl', x + 65, y, true);
+            const bond = createBond(x + 50, y + 23, 15, 5, 'bond-weak');
+            parent.appendChild(cl1);
+            parent.appendChild(bond);
+            parent.appendChild(cl2);
+        }
+
+        function drawH2Vertical(x, y, parent) {
+            const h1 = createAtom('H', x, y);
+            const h2 = createAtom('H', x, y + 75);
+            const bond = createBond(x + 23, y + 55, 5, 20, 'bond-h');
+            parent.appendChild(h1);
+            parent.appendChild(bond);
+            parent.appendChild(h2);
+        }
+
+        function drawCl2Vertical(x, y, parent) {
+            const cl1 = createAtom('Cl', x, y, true);
+            const cl2 = createAtom('Cl', x, y + 75, true);
+            const bond = createBond(x + 23, y + 55, 5, 20, 'bond-cl');
+            parent.appendChild(cl1);
+            parent.appendChild(bond);
+            parent.appendChild(cl2);
+        }
+
+        function drawHClVertical(x, y, parent) {
+            const h = createAtom('H', x, y);
+            const cl = createAtom('Cl', x, y + 75, true);
+            const bond = createBond(x + 23, y + 55, 5, 20, 'bond-hcl');
+            parent.appendChild(h);
+            parent.appendChild(bond);
+            parent.appendChild(cl);
+        }
+
+        function createAtom(symbol, x, y, isCl = false) {
+            const atom = document.createElement('div');
+            atom.className = 'atom ' + (isCl ? 'atom-cl' : 'atom-h');
+            atom.textContent = symbol;
+            atom.style.left = x + 'px';
+            atom.style.top = y + 'px';
+            return atom;
+        }
+
+        function createBond(x, y, w, h, cls) {
+            const bond = document.createElement('div');
+            bond.className = 'bond ' + cls;
+            bond.style.left = x + 'px';
+            bond.style.top = y + 'px';
+            bond.style.width = w + 'px';
+            bond.style.height = h + 'px';
+            return bond;
+        }
+
+        function addLabel(parent, x, y, text, isSuccess) {
+            const label = document.createElement('div');
+            label.className = 'label' + (isSuccess ? ' label-success' : '');
+            label.textContent = text;
+            label.style.left = x + 'px';
+            label.style.top = y + 'px';
+            label.style.transform = 'translateX(-50%)';
+            parent.appendChild(label);
+        }
+
         function init() {
-            const grid = document.getElementById('btnGrid');
+            const list = document.getElementById('btnList');
             Object.keys(data).forEach(key => {
                 const btn = document.createElement('button');
                 btn.className = 'btn' + (key === type ? ' active' : '');
                 btn.textContent = data[key].title.split('(')[0].trim();
-                btn.onclick = () => select(key);
-                grid.appendChild(btn);
+                btn.onclick = () => select(key, btn);
+                list.appendChild(btn);
             });
 
             const stepsDiv = document.getElementById('steps');
@@ -339,11 +671,11 @@
             update();
         }
 
-        function select(t) {
+        function select(t, btn) {
             type = t;
             step = 0;
             document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            btn.classList.add('active');
             update();
         }
 
@@ -363,7 +695,6 @@
             document.getElementById('desc').textContent = d.desc;
             document.getElementById('obs').textContent = d.obs[step];
             document.getElementById('reason').textContent = d.why;
-            document.getElementById('animArea').textContent = 'Etapa ' + (step+1) + ' de 4';
             
             const st = document.getElementById('status');
             st.textContent = d.ok ? '✓ COLISÃO EFETIVA' : '✗ COLISÃO NÃO EFETIVA';
@@ -372,12 +703,20 @@
             document.querySelectorAll('.step').forEach((s, i) => {
                 s.className = 'step ' + (i === step ? 'on' : 'off');
             });
+
+            const container = document.getElementById('animArea');
+            drawMolecule(container, type, step);
         }
 
-        // Atalhos de teclado
         document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowRight' || e.key === ' ') next();
-            if (e.key === 'ArrowLeft') reset();
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                next();
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                reset();
+            }
         });
 
         init();
